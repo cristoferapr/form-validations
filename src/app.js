@@ -16,6 +16,7 @@ window.onload = function() {
   const postalCodeInput = document.getElementById("postalcode");
   const stateInput = document.getElementById("state");
   const radioInputs = document.querySelectorAll('input[type="radio"]');
+  const sendButton = document.getElementById("send");
 
   const errorDiv = document.getElementById("errors");
   const errorMessages = [];
@@ -42,8 +43,8 @@ window.onload = function() {
     const isCvcValid = cvcRegex.test(cvcValue);
     const isAmountValid = amountRegex.test(amountValue);
     const isfirstNameValid = firstNameRegex.test(firstNameValue);
-    const islastNameValid = firstNameRegex.test(lastNameValue);
-    const iscityValid = firstNameRegex.test(cityValue);
+    const islastNameValid = lastNameRegex.test(lastNameValue);
+    const iscityValid = cityRegex.test(cityValue);
     const ispostalCodeValid = postalCodeRegex.test(postalCodeValue);
     radioInputs.forEach(input => {
       if (input.checked) {
@@ -105,6 +106,19 @@ window.onload = function() {
       </div>
   `;
   };
+
+  sendButton.addEventListener("click", () => {
+    // Validar campos
+    validateInputs();
+
+    // Obtener mensajes de error
+    const errorMessageDivs = errorDiv.querySelectorAll(".bg-danger");
+
+    // Si hay mensajes de error, prevenir el envío de los datos
+    if (errorMessageDivs.length > 0) {
+      event.preventDefault();
+    }
+  });
 
   cardInput.addEventListener("input", validateInputs);
   cvcInput.addEventListener("input", validateInputs);
